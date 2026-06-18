@@ -1,0 +1,48 @@
+{
+  "standard": "Open Snow Discovery Standard",
+  "version": "0.1",
+  "status": "draft",
+  "url": "https://opensourcesnow.com",
+  "builtOn": {
+    "ard": "https://agenticresourcediscovery.org/",
+    "aiCatalog": "https://github.com/Agent-Card/ai-catalog",
+    "aiCatalogSpecVersion": "1.0"
+  },
+  "domain": "ski-and-snow",
+  "publish": {
+    "manifestPath": "/.well-known/ai-catalog.json",
+    "transport": "https",
+    "contentType": "application/json",
+    "cors": "Access-Control-Allow-Origin: *",
+    "entry": {
+      "identifierFormat": "urn:ai:<domain>:<namespace>:<name>",
+      "requiredFields": ["identifier", "type", "url", "description"],
+      "representativeQueries": { "min": 2, "max": 5 }
+    }
+  },
+  "verify": {
+    "identity": "did:web",
+    "didDocumentPath": "/.well-known/did.json",
+    "keyType": "Ed25519",
+    "signature": {
+      "format": "detached-jws",
+      "rfc": ["RFC7515", "RFC8785"],
+      "alg": "EdDSA",
+      "payload": "entry object, JCS-canonicalized, with trustManifest.signature removed",
+      "field": "trustManifest.signature"
+    }
+  },
+  "conformanceLevels": [
+    { "name": "listed", "requires": ["publish"] },
+    { "name": "verified", "requires": ["publish", "verify"] }
+  ],
+  "federation": {
+    "interface": "ARD POST /search",
+    "permissionless": true,
+    "referenceRegistry": "https://www.snowsure.ai/search"
+  },
+  "referenceImplementations": [
+    "snowsure.ai", "snowdata.ai", "lux.ski", "afo.re", "skilimone.com"
+  ],
+  "license": { "spec": "CC-BY-4.0", "code": "MIT" }
+}
